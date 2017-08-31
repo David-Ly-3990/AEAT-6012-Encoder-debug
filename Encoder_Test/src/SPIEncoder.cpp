@@ -14,11 +14,27 @@ m_ChipSelect(4)
 
 
 {
+	m_GetAjustment.open("Ajustment.txt");
+	if(!m_GetAjustment.is_open())
+	{
+		m_GetAjustment.close();
+		m_SetAjustment.open("Ajustment.txt");
+		m_SetAjustment<< 0 <<std::endl<< 0 <<std::endl<< 0 <<std::endl<< 0 <<std::endl;
+		m_SetAjustment.close();
+		m_GetAjustment.open("Ajustment.txt");
+	}
+	char num[17];
+
+
+
 	for(int i =0; i <4; ++i)
 	{
 		m_bittointeger[i] = 0;
-		m_ajustments [i] = 0;
+
+		 m_GetAjustment.getline(num,17);
+		 m_ajustments = (double)num;
 	}
+	m_GetAjustment.close();
 
 
 m_timer.Start();
@@ -70,17 +86,20 @@ void SPIEncoder::GetAngle()
 
 double SPIEncoder::ReturnAngle(int position)
 {
-	return (m_bittointeger[position]*1/4096*360)/2;
+	return ((m_bittointeger[position]*1/4096*360)/2)+ m_ajustments;
 }
 
 void SPIEncoder::Ajustments()
 {
+	m_SetAjustment.open("Ajustment.txt"); // open the ajustment file
+
 	this->GetAngle();
 	for(int i = 0; i<4;++i)
 	{
-		m_ajustments[i] = m_bittointeger[i];
+		m_SetAjustment << m_bittointeger[i]<< std::endl;
 	}
 
+	m_SetAjustment.close();
 	//SmartDashboard::PutNumber("Front-Right",m_ajustments[SPIEncoder::kFrontRight]);
 	//SmartDashboard::PutNumber("Front-Left",m_ajustments[SPIEncoder::kFrontLeft]);
 	//SmartDashboard::PutNumber("Back-Left",m_ajustments[SPIEncoder::kBackLeft]);
