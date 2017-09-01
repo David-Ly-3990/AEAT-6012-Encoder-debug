@@ -14,14 +14,14 @@ m_ChipSelect(4)
 
 
 {
-	m_GetAjustment.open("Ajustment.txt");
-	if(!m_GetAjustment.is_open())
+	m_GetAjustment.open("Ajustment.txt"); // open ajustment text file to read
+	if(!m_GetAjustment.is_open()) // check if the file can be openned
 	{
-		m_GetAjustment.close();
-		m_SetAjustment.open("Ajustment.txt");
-		m_SetAjustment<< 0 <<std::endl<< 0 <<std::endl<< 0 <<std::endl<< 0 <<std::endl;
-		m_SetAjustment.close();
-		m_GetAjustment.open("Ajustment.txt");
+		m_GetAjustment.close(); // close file if previous is failed
+		m_SetAjustment.open("Ajustment.txt"); // create a  text file
+		m_SetAjustment<< 0 <<std::endl<< 0 <<std::endl<< 0 <<std::endl<< 0 <<std::endl; // set all 4 value to 0
+		m_SetAjustment.close();	// close file
+		m_GetAjustment.open("Ajustment.txt"); //open file to read
 	}
 	char num[17];
 
@@ -29,12 +29,12 @@ m_ChipSelect(4)
 
 	for(int i =0; i <4; ++i)
 	{
-		m_bittointeger[i] = 0;
+		m_bittointeger[i] = 0; // reset all values
 
-		 m_GetAjustment.getline(num,17);
-		 m_ajustments = (double)num;
+		 m_GetAjustment.getline(num,17); // Get ajustment values
+		 m_ajustments[i] = std::atof(num); // Set ajustment values in a variable
 	}
-	m_GetAjustment.close();
+	m_GetAjustment.close(); // close file
 
 
 m_timer.Start();
