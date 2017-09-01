@@ -70,15 +70,14 @@ void SPIEncoder::GetAngle()
 
 		m_bittointeger[SPIEncoder::kFrontRight] += pow(2,12-i)*((int)m_FrontRight.Get()); // get the bit value and convert it to decimal
 
-		std::cout<<m_FrontRight.Get();
 		m_Clock.Set(false); // stop clock
 
 
 	}
-	std::cout<<std::endl;
+
 
 	m_ChipSelect.Set(true); // tell encoder to stop reading
-	std::cout<<"CHIPdisable"<<std::endl;
+
 
 
 
@@ -86,7 +85,7 @@ void SPIEncoder::GetAngle()
 
 double SPIEncoder::ReturnAngle(int position)
 {
-	return ((m_bittointeger[position]*1/4096*360)/2)+ m_ajustments;
+	return fmod((m_bittointeger[position]*1/4096*360)/2 + m_ajustments[position],360);
 }
 
 void SPIEncoder::Ajustments()
@@ -106,35 +105,4 @@ void SPIEncoder::Ajustments()
 	//SmartDashboard::PutNumber("Back-Right",m_ajustments[SPIEncoder::kBackRight]);
 }
 
-/*
- * // Example program
-#include <iostream>
-#include <string>
-#include <math.h>
 
-int main()
-{
-    int bit = 0;
-    int integer = 0;
-    int a=0;
-    char aa[10];
-    fgets (aa, 10, stdin);
-
-    bit = atoi(aa);
-
-  for(int i = 0; bit != 0 ; ++i )
-  {
-      a = bit % 10;
-      bit= (bit)/10;//(a>1? 1:0))/10;
-      std::cout<< bit <<std::endl;
-
-     if(a>0)
-     {
-      integer += pow(2,i);
-     }
-
-  }
-  std::cout<< integer<<std::endl;
-
-}
- */

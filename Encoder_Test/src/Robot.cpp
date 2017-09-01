@@ -12,8 +12,9 @@
 class Robot: public frc::IterativeRobot {
 public:
 	SPIEncoder encoder;
-
-	void RobotInit()
+	Joystick m_Pilot;
+	void RobotInit():
+		m_Pilot(0)
 	{
 
 		chooser.AddDefault(autoNameDefault, autoNameDefault);
@@ -37,8 +38,12 @@ void TestInit()
 	encoder.GetAngle();
 	SmartDashboard::PutNumber("angle: ", encoder.ReturnAngle(0));
 }
-	void TestPeriodic() {
-		lw->Run();
+	void TestPeriodic()
+	{
+		if(m_Pilot.GetRawButton(0)&&m_Pilot.GetRawButton(1))
+		{
+			encoder.Ajustments();
+		}
 	}
 
 private:

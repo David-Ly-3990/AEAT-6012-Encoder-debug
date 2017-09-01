@@ -4,14 +4,14 @@
  *  Created on: 9 mai 2017
  *      Author: 14141106
  */
-#include "CANTalon.h"
+
 #include "WPILib.h"
-#include "AHRS.h"
 #include <DigitalInput.h>
 #include <DigitalOutput.h>
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
+#include <math.h>
 
 #define FRONTRIGHTENCODER 3
 #define CLOCK 5
