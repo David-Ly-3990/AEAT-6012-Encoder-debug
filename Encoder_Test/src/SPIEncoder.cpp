@@ -85,7 +85,7 @@ void SPIEncoder::GetAngle()
 
 double SPIEncoder::ReturnAngle(int position)
 {
-	return fmod((m_bittointeger[position]*1/4096*360)/2 + m_ajustments[position],360);
+	return fmod((m_bittointeger[position]*1/4096*360)/2 - m_ajustments[position] + 360,360);
 }
 
 void SPIEncoder::Ajustments()
@@ -95,7 +95,7 @@ void SPIEncoder::Ajustments()
 	this->GetAngle();
 	for(int i = 0; i<4;++i)
 	{
-		m_SetAjustment << m_bittointeger[i]<< std::endl;
+		m_SetAjustment << m_bittointeger[i] << std::endl;
 	}
 
 	m_SetAjustment.close();
