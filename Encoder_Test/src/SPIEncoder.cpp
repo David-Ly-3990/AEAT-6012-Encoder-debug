@@ -17,13 +17,17 @@ m_ChipSelect(4)
 	m_GetAjustment.open("Ajustment.txt"); // open ajustment text file to read
 	if(!m_GetAjustment.is_open()) // check if the file can be openned
 	{
+		SmartDashboard::PutNumber("Text file", 0);
 		m_GetAjustment.close(); // close file if previous is failed
 		m_SetAjustment.open("Ajustment.txt"); // create a  text file
 		m_SetAjustment<< 0 <<std::endl<< 0 <<std::endl<< 0 <<std::endl<< 0 <<std::endl; // set all 4 value to 0
 		m_SetAjustment.close();	// close file
 		m_GetAjustment.open("Ajustment.txt"); //open file to read
+
 	}
+	else SmartDashboard::PutNumber("Text file", 1);
 	char num[17];
+
 
 
 
@@ -35,7 +39,9 @@ m_ChipSelect(4)
 		 m_ajustments[i] = std::atof(num); // Set ajustment values in a variable
 	}
 	m_GetAjustment.close(); // close file
-
+	m_GetAjustment.open("Ajustment.txt");
+	m_GetAjustment.getline(num,17);
+	SmartDashboard::PutString("Value", num);
 
 m_timer.Start();
 m_timer.Stop();
@@ -49,6 +55,7 @@ SPIEncoder::~SPIEncoder() {
 
 void SPIEncoder::GetAngle()
 {
+
 	for(int i = 0; i<4;++i) // reset angle values
 	{
 		m_bittointeger[i] = 0;
@@ -93,10 +100,9 @@ void SPIEncoder::Ajustments()
 	m_SetAjustment.open("Ajustment.txt"); // open the ajustment file
 
 	this->GetAngle();
-	for(int i = 0; i<4;++i)
-	{
-		m_SetAjustment << m_bittointeger[i] << std::endl;
-	}
+
+		m_SetAjustment << m_bittointeger[0] << std::endl;
+
 
 	m_SetAjustment.close();
 	//SmartDashboard::PutNumber("Front-Right",m_ajustments[SPIEncoder::kFrontRight]);
