@@ -8,24 +8,22 @@
 #include <SPIEncoder.h>
 
 SPIEncoder::SPIEncoder():
-m_FrontRight(3),
-m_Clock(5),
-m_ChipSelect(4)
+m_FrontRight(2),
+m_Clock(0),
+m_ChipSelect(1)
 
 
 {
-	m_GetAjustment.open("Ajustment.txt"); // open ajustment text file to read
+	m_GetAjustment.open("/home/lvuser/Ajustment.txt"); // open ajustment text file to read
 	if(!m_GetAjustment.is_open()) // check if the file can be openned
 	{
-		SmartDashboard::PutNumber("Text file", 0);
 		m_GetAjustment.close(); // close file if previous is failed
-		m_SetAjustment.open("Ajustment.txt"); // create a  text file
+		m_SetAjustment.open("/home/lvuser/Ajustment.txt"); // create a  text file
 		m_SetAjustment<< 0 <<std::endl<< 0 <<std::endl<< 0 <<std::endl<< 0 <<std::endl; // set all 4 value to 0
 		m_SetAjustment.close();	// close file
-		m_GetAjustment.open("Ajustment.txt"); //open file to read
+		m_GetAjustment.open("/home/lvuser/Ajustment.txt"); //open file to read
 
 	}
-	else SmartDashboard::PutNumber("Text file", 1);
 	char num[17];
 
 
@@ -39,9 +37,9 @@ m_ChipSelect(4)
 		 m_ajustments[i] = std::atof(num); // Set ajustment values in a variable
 	}
 	m_GetAjustment.close(); // close file
-	m_GetAjustment.open("Ajustment.txt");
+	m_GetAjustment.open("/home/lvuser/Ajustment.txt");
 	m_GetAjustment.getline(num,17);
-	SmartDashboard::PutString("Value", num);
+	SmartDashboard::PutString("Adjustment value", num);
 
 m_timer.Start();
 m_timer.Stop();
@@ -61,7 +59,6 @@ void SPIEncoder::GetAngle()
 		m_bittointeger[i] = 0;
 	}
 	m_ChipSelect.Set(false); // tell encoder to start reading soon
-	std::cout<<"CHIPENABLE"<<std::endl;
 	m_timer.Start();	// start timer for encoder to boot up
 
 	if(m_timer.HasPeriodPassed(0.001)) return; //wait
@@ -97,7 +94,7 @@ double SPIEncoder::ReturnAngle(int position)
 
 void SPIEncoder::Ajustments()
 {
-	m_SetAjustment.open("Ajustment.txt"); // open the ajustment file
+	m_SetAjustment.open("/home/lvuser/Ajustment.txt"); // open the ajustment file
 
 	this->GetAngle();
 
