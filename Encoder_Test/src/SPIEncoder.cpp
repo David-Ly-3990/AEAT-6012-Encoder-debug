@@ -97,11 +97,20 @@ void SPIEncoder::Ajustments()
 	m_SetAjustment.open("/home/lvuser/Ajustment.txt"); // open the ajustment file
 
 	this->GetAngle();
-
+//for
 		m_SetAjustment << m_bittointeger[0] << std::endl;
 
 
 	m_SetAjustment.close();
+
+	char angle[17];
+
+	m_GetAjustment.open("/home/lvuser/Ajustment.txt");
+	//for
+	m_GetAjustment.getline(angle,17);
+	m_ajustments[0] = angle;
+	m_GetAjustment.close();
+
 	//SmartDashboard::PutNumber("Front-Right",m_ajustments[SPIEncoder::kFrontRight]);
 	//SmartDashboard::PutNumber("Front-Left",m_ajustments[SPIEncoder::kFrontLeft]);
 	//SmartDashboard::PutNumber("Back-Left",m_ajustments[SPIEncoder::kBackLeft]);
