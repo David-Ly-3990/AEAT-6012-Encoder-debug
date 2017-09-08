@@ -108,7 +108,7 @@ void SPIEncoder::Ajustments()
 	m_GetAjustment.open("/home/lvuser/Ajustment.txt");
 	//for
 	m_GetAjustment.getline(angle,17);
-	m_ajustments[0] = angle;
+	m_ajustments[0] = std::atof(angle);
 	m_GetAjustment.close();
 
 	//SmartDashboard::PutNumber("Front-Right",m_ajustments[SPIEncoder::kFrontRight]);
