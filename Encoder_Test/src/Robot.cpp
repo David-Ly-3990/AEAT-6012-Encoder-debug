@@ -14,7 +14,16 @@ public:
 	SPIEncoder encoder;
 	Joystick m_Pilot;
 	Robot():
+<<<<<<< HEAD
 		m_Pilot(0)
+=======
+	m_Pilot(0)
+	{
+
+	}
+	void RobotInit()
+
+>>>>>>> a53f9d43956301ccf483765dd81fc005dd2f475b
 	{
 
 	}
@@ -36,6 +45,10 @@ public:
 	{
 		encoder.GetAngle();
 		SmartDashboard::PutNumber("angle: ", encoder.ReturnAngle(0));
+		if(m_Pilot.GetRawButton(0))
+		{
+			encoder.Ajustments();
+		}
 	}
 void TestInit()
 {

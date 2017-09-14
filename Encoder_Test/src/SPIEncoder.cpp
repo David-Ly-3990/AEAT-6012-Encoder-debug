@@ -100,7 +100,7 @@ void SPIEncoder::Ajustments()
 
 	this->GetAngle();
 //for
-		m_SetAjustment << m_bittointeger[0] << std::endl;
+		m_SetAjustment << this->ReturnAngle(0) << std::endl;
 
 
 	m_SetAjustment.close();
