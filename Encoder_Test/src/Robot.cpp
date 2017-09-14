@@ -13,8 +13,12 @@ class Robot: public frc::IterativeRobot {
 public:
 	SPIEncoder encoder;
 	Joystick m_Pilot;
-	void RobotInit():
+	Robot():
 		m_Pilot(0)
+	{
+
+	}
+	void RobotInit()
 	{
 
 		chooser.AddDefault(autoNameDefault, autoNameDefault);
